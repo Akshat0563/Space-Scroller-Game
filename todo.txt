@@ -1,0 +1,92 @@
+ 1)Creating a player
+2)adding gravity to the player
+    this can be achieved by adding the velocity to the player
+    we will define a velocity property in the constructor
+    but will need an update function to update it to change'
+    velocity. As player will always move in y direction implies
+    in update function we will be adding velocity to the current
+    'y position. and this updation should be looped in order to
+    update the value over and over again
+    Animate function is used for this purpose
+
+3) Player Movement-will be done using the arrows
+    for this i used event listener to and map those to certain 
+    transitions in the player poisition
+    the movement is right is done with even listeners keyup and kneydown
+    and with the animate loop if it is break it will break else keep moving
+
+4) Platforms-we will be making a simple class for the platform 
+where wew will be using the normal draw command and not the update
+
+    Rather when the block falls on the platform it needs
+    to sit on it and not fall through, it 
+    this is done using collision detection system
+    Rectangular collision system
+
+5) Scroll- when player moves the scroll is also present.
+    actually what we will do is that the movement of 
+    the player is stopped and the background starts moving
+
+
+6)Win Scenario - we will make it a standard length that
+    if the player has travelled say 100m he wins
+7) Added the image and also fixed the outline where the game will be played
+
+8)Parallax effect- here everything added will act as a decorational
+    object so this will have a seperate class of it
+    Moving the generic Objects at a speed lesser than the speed of the movement of 
+    the base
+
+9)death pits-basically performed a check that if you have visited
+bottom of the canvas.height in that case init() call which
+reinitializes everything to default
+
+10) Level creation- making more platforms and adding levels to the challenge and
+also updating the win condition
+
+11)fixing the back movement - such that if scrollOffset>0 then only move left
+else don't move left also for the parallax effect to stabalize if scrollOffset===0
+
+12) Sprite creation and using dekey tool (only free version is what i used and this
+was the character available to me)
+Basically creating the character and also adding animation to it
+
+I will be having for each of a defined movement a single long animation
+now using the draw context i was looping through the images to produce the
+images in order to create a movement
+I will be having a height and width parameter associated with the 
+drawing context of the player
+i have also added 4 more parameter after the this.image in raw contextto specify the 
+cropped dimension of the photograph
+and also added a parameter frame, which tells which frame we are
+ currently of the image
+ so as we have that cropping dimension as the frame keeps changing 
+ over width dimesion of the crop starting point also changes by that amount and 
+ gives us correspoding image and also we will be making it a modulo
+ function so that it keeps on moving   
+ added many properties like sprite and current sprite
+ and when the key is pressed i have made it run 
+ and if keyup then made it move
+ As when i am noticing the player is running and the dimensions of the 
+ running person is different in that case i have to change the dimensions of the 
+ player
+ also i had to add many parameters in order to maintain the correct
+ dimensions of both the frames i am accounting for and also the 
+ frames for stading is around 28 and frames for running animation is 
+ around 60
+ Similarly i added for the left movement too,
+ but know the problem i faced was there was a delay between
+ the key press and the game fps so for that i removed the toggle from
+ there and then changed the animate function
+
+
+ Now this is the basic blueprint reay 
+ Additions for the project
+ 1)addition of audio
+ 2)addition of game completion and flag pole 
+ 3)enemy inclusion
+
+ This will make the game complete for today , now i just need to 
+ better the project with powerups, coin collection, and scoring system
+ color changing characters and adding levels
+ 
