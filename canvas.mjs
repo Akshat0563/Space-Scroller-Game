@@ -23,6 +23,10 @@ class Player {
     this.height = 150;
     this.image = createImage("./img/spriteStandRight.png");
     this.frames = 0;
+    this.jumpSound = new Audio();
+    this.die = new Audio();
+    this.jumpSound.src = "./img/jumpAudio.mp3";
+    this.die.src = "./img/die.mp3";
     //
     this.sprites = {
       stand: {
@@ -157,6 +161,23 @@ let keys = {
 let scrollOffset = 0;
 
 function init() {
+  // window.addEventListener("keydown", (e) => {
+  //   // if (e.repeat) {
+  //   //   player.sound.pause();
+  //   // }
+  //   if (e.key === " ") {
+  //     if (e.repeat) {
+  //       return;
+  //     }
+  //     player.sound.play();
+  //   }
+  //   if (e.key === "m") {
+  //     if (e.repeat) {
+  //       return;
+  //     }
+  //     player.sound.pause();
+  //   }
+  // });
   platformImage = createImage("./img/platform.png");
 
   //creating an object
@@ -165,7 +186,7 @@ function init() {
     new Platform({
       x:
         platformImage.width * 4 +
-        300 -
+        500 -
         2 +
         platformImage.width -
         platformSmallTallImage.width,
@@ -175,7 +196,7 @@ function init() {
     new Platform({
       x:
         platformImage.width * 7 +
-        800 -
+        1000 -
         2 +
         platformImage.width -
         platformSmallTallImage.width,
@@ -183,49 +204,53 @@ function init() {
       image: platformSmallTallImage,
     }),
     new Platform({ x: -1, y: 470, image: platformImage }),
-    new Platform({ x: platformImage.width - 2, y: 470, image: platformImage }),
     new Platform({
-      x: platformImage.width * 2 + 100,
+      x: platformImage.width + 200,
       y: 470,
       image: platformImage,
     }),
     new Platform({
-      x: platformImage.width * 3 + 300,
+      x: platformImage.width * 2 + 200 - 2,
       y: 470,
       image: platformImage,
     }),
     new Platform({
-      x: platformImage.width * 4 + 300 - 2,
+      x: platformImage.width * 3 + 500,
       y: 470,
       image: platformImage,
     }),
     new Platform({
-      x: platformImage.width * 5 + 800 - 2,
+      x: platformImage.width * 4 + 500 - 2,
       y: 470,
       image: platformImage,
     }),
     new Platform({
-      x: platformImage.width * 6 + 500 - 2,
+      x: platformImage.width * 5 + 1000 - 2,
       y: 470,
       image: platformImage,
     }),
     new Platform({
-      x: platformImage.width * 7 + 800 - 2,
+      x: platformImage.width * 6 + 700 - 2,
       y: 470,
       image: platformImage,
     }),
     new Platform({
-      x: platformImage.width * 8 + 1200 - 2,
+      x: platformImage.width * 7 + 1000 - 2,
       y: 470,
       image: platformImage,
     }),
     new Platform({
-      x: platformImage.width * 9 + 1200 - 2,
+      x: platformImage.width * 8 + 1400 - 2,
       y: 470,
       image: platformImage,
     }),
     new Platform({
-      x: platformImage.width * 9 + 1000 - 50,
+      x: platformImage.width * 9 + 1400 - 2,
+      y: 470,
+      image: platformImage,
+    }),
+    new Platform({
+      x: platformImage.width * 9 + 1200 - 50,
       y: canvas.height - platformImage.height - flagPoleImage.height + 20,
       image: flagPoleImage,
     }),
@@ -363,7 +388,7 @@ function animate() {
   }
 
   //WIN condition
-  if (scrollOffset >= platformImage.width * 10) {
+  if (scrollOffset >= platformImage.width * 10 + 100) {
     console.log("You Win ");
     init();
   }
@@ -371,6 +396,7 @@ function animate() {
   //LOSE condition
   if (player.position.y > canvas.height) {
     //restart the game
+    player.die.play();
     init();
   }
 }
@@ -381,9 +407,8 @@ animate();
 //and the event mein keyCode will tell which key is pressed
 //keycode ko we can directly take by destructuring
 
-addEventListener("keydown", ({ key }) => {
-  console.log(key);
-  switch (key) {
+addEventListener("keydown", (event) => {
+  switch (event.key) {
     case "a":
       keys.left.pressed = true;
       lastKey = "left";
@@ -399,6 +424,10 @@ addEventListener("keydown", ({ key }) => {
       break;
 
     case "w":
+      if (event.repeat) {
+        return;
+      }
+      player.jumpSound.play();
       player.velocity.y -= 25; //this moves player up
       break;
   }
